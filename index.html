@@ -40,12 +40,28 @@
         const markersLayer = new L.LayerGroup();
         markersLayer.addTo(map);
 
+
+
+        <script>
+            // Hasłol
+            const Haslo = "mapa123";
+        let podaneHaslo = promt("Podaj hasło:");
+        if (podaneHaslo !== tajneHaslo) {
+            document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; color:red;'>Błędne hasło! Brak dostępu do mapy.</h2>";
+            throw new Error("Błędne hasło"); 
+        }
+            </script>
+
+    
         // --- PINEZKI Z KODU (dodawaj kolejne według tego wzoru) ---
 
         const marker1 = L.marker([51.5510, 21.8923], {title: "Dęblin"});
         marker1.bindPopup("<b>Dęblin</b><br> 41 BLSz.");
         markersLayer.addLayer(marker1);
 
+
+
+        
 
 
         // ----------------------------------------------------------------
