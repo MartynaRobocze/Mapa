@@ -3,81 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja Mapa Pinezek</title>
+    <title>Realizacje</title>
+
     
-    <!-- Styl biblioteki Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
+
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.9/leaflet-search.min.css" />
+
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        #map {
-            width: 100vw;
-            height: 100vh;
-        }
-        /* Styl dla dymka z informacją w pinezce */
-        .popup-input {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
+        body { margin: 0; padding: 0; }
+        #map { width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
 
-    <!-- Kontener na mapę -->
     <div id="map"></div>
 
-    <!-- Skrypt biblioteki Leaflet -->
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <script>
-        // 1. Inicjalizacja mapy (ustawiona na środku świata)
-        const map = L.map('map').setView([20, 0], 2);
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.9/leaflet-search.min.js"></script>
 
-        // 2. Dodanie warstwy graficznej mapy z OpenStreetMap
+    <script>
+        // Inicjalizacja mapy
+        const map = L.map('map').setView([51.9194, 19.1451], 6);
+
+       
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // 3. Nasłuchiwanie kliknięcia w mapę – dodawanie pinezki
-        map.on('click', function(e) {
-            const lat = e.latlng.lat;
-            const lng = e.latlng.lng;
+        // Grupa dla Twoich pinezek
+        const markersLayer = new L.LayerGroup();
+        markersLayer.addTo(map);
 
-            // Tworzymy popup z formularzem do wpisania nazwy miejsca
-            const popupContent = `
-                <div class="popup-input">
-                    <h3>Dodaj miejsce</h3>
-                    <input type="text" id="placeName" placeholder="Nazwa miejsca...">
-                    <button onclick="saveMarker(${lat}, ${lng})">Zapisz</button>
-                </div>
-            `;
+        // --- PINEZKI Z KODU (dodawaj kolejne według tego wzoru) ---
 
-            L.popup()
-                .setLatLng([lat, lng])
-                .setContent(popupContent)
-                .openOn(map);
+        const marker1 = L.marker([51.5510, 21.8923], {title: "Dęblin"});
+        marker1.bindPopup("<b>Dęblin</b><br> 41 BLSz.");
+        markersLayer.addLayer(marker1);
+
+
+
+        // ----------------------------------------------------------------
+
+        // Wyszukiwarka 
+        const searchControl = new L.Control.Search({
+            layer: markersLayer,
+            initial: false,
+            zoom: 12,
+            marker: false,
+            textPlaceholder: "Szukaj w swoich punktach..."
         });
 
-        // 4. Funkcja zapisująca pinezkę po kliknięciu przycisku w popupie
-        window.saveMarker = function(lat, lng) {
-            const nameInput = document.getElementById('placeName');
-            const placeName = nameInput.value ? nameInput.value : "Bez nazwy";
+        map.addControl(searchControl);
 
-            // Tworzymy pinezkę na mapie
-            L.marker([lat, lng])
-                .addTo(map)
-                .bindPopup(`<b>${placeName}</b>`)
-                .openPopup();
-
-            // Zamknięcie aktywnego popupu
-            map.closePopup();
-        };
     </script>
 
 </body>
