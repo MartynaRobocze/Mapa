@@ -42,15 +42,7 @@
 
 
 
-        <script>
-            // Hasło
-            const tajneHaslo = "mapa123";
-        let podaneHaslo = promt("Podaj hasło:");
-        if (podaneHaslo !== tajneHaslo) {
-            document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; color:red;'>Błędne hasło! Brak dostępu do mapy.</h2>";
-            throw new Error("Błędne hasło"); 
-        }
-            </script>
+
 
     
         // --- PINEZKI Z KODU (dodawaj kolejne według tego wzoru) ---
@@ -59,7 +51,17 @@
         marker1.bindPopup("<b>Dęblin</b><br> 41 BLSz.");
         markersLayer.addLayer(marker1);
 
+<script>
+    // Tutaj ustawiasz swoje hasło
+    const tajneHaslo = "mojamapa123"; 
 
+    let podaneHaslo = prompt("Podaj hasło, aby zobaczyć mapę:");
+
+    if (podaneHaslo !== tajneHaslo) {
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; color:red;'>Błędne hasło! Brak dostępu do mapy.</h2>";
+        throw new Error("Błędne hasło"); // Zatrzymuje wczytywanie mapy
+    }
+</script>
 
         
 
