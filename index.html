@@ -53,16 +53,23 @@
 
 </body>
 
-<!-- SKRYPT SPRAWDZAJĄCY HASŁO NA SAMYM KOŃCU -->
+<!-- SKRYPT HASŁA Z POPRAWKĄ DLA MAPY -->
 <script>
-    const tajneHaslo = "mojamapa123";  
+    const tajneHaslo = "mapa123";  
     let podaneHaslo = prompt("Podaj hasło, aby zobaczyć mapę:");
 
     if (podaneHaslo === tajneHaslo) {
-        // Jeśli hasło OK, odkrywamy całą stronę
+        // Odkrywamy stronę
         document.getElementById("glowna-strona").style.display = "block";
+        
+        // WAŻNE: Informujemy mapę, że strona jest już widoczna, 
+        // dzięki czemu kafelki mapy poprawnie się załadują!
+        if (typeof map !== 'undefined') {
+            setTimeout(function() {
+                map.invalidateSize();
+            }, 100);
+        }
     } else {
-        // Jeśli złe, wyświetlamy tylko komunikat i nic więcej
         document.body.style.display = "block";
         document.body.innerHTML = "<h2 style='text-align:center; margin-top:30vh; color:red; font-family: sans-serif;'>Błędne hasło! Brak dostępu do mapy.</h2>";
     }
