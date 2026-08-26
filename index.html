@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realizacje</title>
-
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
- 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.9/leaflet-search.min.css" />
 
     <style>
@@ -18,19 +15,26 @@
 </head>
 <body>
 
+    <!-- ZABEZPIECZENIE HASŁEM -->
+    <script>
+        const tajneHaslo = "mojamapa123";  
+        let podaneHaslo = prompt("Podaj hasło, aby zobaczyć mapę:");
+
+        if (podaneHaslo !== tajneHaslo) {
+            document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; color:red;'>Błędne hasło! Brak dostępu do mapy.</h2>";
+            throw new Error("Błędne hasło");
+        }
+    </script>
+
     <div id="map"></div>
 
-    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.9/leaflet-search.min.js"></script>
 
     <script>
         // Inicjalizacja mapy
         const map = L.map('map').setView([51.9194, 19.1451], 6);
 
-       
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
@@ -40,31 +44,11 @@
         const markersLayer = new L.LayerGroup();
         markersLayer.addTo(map);
 
-
-
-
-
-    
         // --- PINEZKI Z KODU (dodawaj kolejne według tego wzoru) ---
 
         const marker1 = L.marker([51.5510, 21.8923], {title: "Dęblin"});
         marker1.bindPopup("<b>Dęblin</b><br> 41 BLSz.");
         markersLayer.addLayer(marker1);
-
-<script>
-    // Tutaj ustawiasz swoje hasło
-    const tajneHaslo = "mojamapa123"; 
-
-    let podaneHaslo = prompt("Podaj hasło, aby zobaczyć mapę:");
-
-    if (podaneHaslo !== tajneHaslo) {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; color:red;'>Błędne hasło! Brak dostępu do mapy.</h2>";
-        throw new Error("Błędne hasło"); // Zatrzymuje wczytywanie mapy
-    }
-</script>
-
-        
-
 
         // ----------------------------------------------------------------
 
@@ -78,7 +62,6 @@
         });
 
         map.addControl(searchControl);
-
     </script>
 
 </body>
