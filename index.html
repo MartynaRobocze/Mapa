@@ -13,18 +13,7 @@
         #map { width: 100vw; height: 100vh; }
     </style>
 </head>
-<body>
-
-    <!-- ZABEZPIECZENIE HASŁEM -->
-    <script>
-        const tajneHaslo = "mojamapa123";  
-        let podaneHaslo = prompt("Podaj hasło, aby zobaczyć mapę:");
-
-        if (podaneHaslo !== tajneHaslo) {
-            document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; color:red;'>Błędne hasło! Brak dostępu do mapy.</h2>";
-            throw new Error("Błędne hasło");
-        }
-    </script>
+<body id="glowna-strona" style="display: none;">
 
     <div id="map"></div>
 
@@ -44,13 +33,11 @@
         const markersLayer = new L.LayerGroup();
         markersLayer.addTo(map);
 
-        // --- PINEZKI Z KODU (dodawaj kolejne według tego wzoru) ---
-
+        // --- PINEZKI Z KODU ---
         const marker1 = L.marker([51.5510, 21.8923], {title: "Dęblin"});
         marker1.bindPopup("<b>Dęblin</b><br> 41 BLSz.");
         markersLayer.addLayer(marker1);
-
-        // ----------------------------------------------------------------
+        // ---------------------
 
         // Wyszukiwarka 
         const searchControl = new L.Control.Search({
@@ -65,4 +52,19 @@
     </script>
 
 </body>
+
+<!-- SKRYPT SPRAWDZAJĄCY HASŁO NA SAMYM KOŃCU -->
+<script>
+    const tajneHaslo = "mojamapa123";  
+    let podaneHaslo = prompt("Podaj hasło, aby zobaczyć mapę:");
+
+    if (podaneHaslo === tajneHaslo) {
+        // Jeśli hasło OK, odkrywamy całą stronę
+        document.getElementById("glowna-strona").style.display = "block";
+    } else {
+        // Jeśli złe, wyświetlamy tylko komunikat i nic więcej
+        document.body.style.display = "block";
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:30vh; color:red; font-family: sans-serif;'>Błędne hasło! Brak dostępu do mapy.</h2>";
+    }
+</script>
 </html>
